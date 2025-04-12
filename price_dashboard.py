@@ -3,7 +3,7 @@ import pandas as pd
 import boto3
 
 st.set_page_config(page_title="Price Monitor", layout="wide")
-st.title("💰 Real-Time Competitor Price Dashboard")
+st.title("Real-Time Competitor Price Dashboard")
 
 # Athena Config
 athena = boto3.client('athena', region_name='us-east-1')
@@ -47,11 +47,11 @@ if not df.empty:
 
     st.dataframe(df)
 
-    st.subheader("📉 Price Drops")
+    st.subheader("Price Drops")
     drops = df[df['current_price'] < df['target_price']]
     st.table(drops)
 
-    st.subheader("📈 Price Trend")
+    st.subheader("Price Trend")
     chart_df = df.groupby('product_name').mean(numeric_only=True)
     st.line_chart(chart_df[['current_price']])
 else:
